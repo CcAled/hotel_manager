@@ -1,4 +1,4 @@
-![Alt text](https://github.com/CcAled/hotel_manager/blob/master/demonstration/demonstration.jpg)
+![image](https://github.com/CcAled/hotel_manager/raw/master/demonstration/demonstration.jpg)
 ## 目录
 * 1.项目使用技术栈
 * 2.项目部署步骤
