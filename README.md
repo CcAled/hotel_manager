@@ -6,8 +6,8 @@
 ### 技术栈
 springboot为框架，thymeleaf为模板引擎，redis作为缓存数据库，mysql作为数据库
 ### 项目部署步骤
-* 1.配置application.properties中的mysql和redis地址、账号、密码，并完成建库建表
-* 2.本地图片存储文件夹默认为C:/hotel_host/img，可在WebMvcConfig中修改
+* 1.配置application.properties中的mysql和redis地址、账号、密码，并完成建库建表（build.sql可导入库和示例数据）
+* 2.本地图片存储文件夹默认为C:/hotel_host/img，可在WebMvcConfig中修改（hotel_host文件内为示例数据）
 ### 关键技术问题的学习与解决
 #### 1.超卖问题的解决
 1.sql语句加判断<br>
