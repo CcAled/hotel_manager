@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>房间列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+</head>
+<body>
+<!-- 用户信息列表 jqgrid start -->
+<div class="row">
+
+    <!-- 搜索内容 -->
+<!--    <div class="col-md-12">-->
+<!--        <br/>-->
+<!--        <form id="searchHotelListForm" class="form-inline" method="post" role="form">-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="hotelName">酒店名:</label>-->
+<!--                <input id="hotelName" name="hotelName" type="text" class="form-control" placeholder="酒店名" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="starRate">酒店星级:</label>-->
+<!--                <input id="starRate" name="starRate" type="text" class="form-control" placeholder="酒店星级" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="address">酒店地址:</label>-->
+<!--                <input id="address" name="address" type="text" class="form-control" placeholder="酒店地址" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="facility">酒店设施:</label>-->
+<!--                <input id="facility" name="facility" type="text" class="form-control" placeholder="酒店设施" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="sight">地标景点:</label>-->
+<!--                <input id="sight" name="sight" type="text" class="form-control" placeholder="地标景点" />-->
+<!--            </div>-->
+<!--            <button id="searchUserListButton" class="btn yellow-casablanca" type="button" onclick="getSearchList()">搜    索</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+    <div class="col-md-12">
+        <br/>
+        <div class="panel-heading">房型信息列表</div>
+        <div class="usersList_wrapper">
+            <table class="table" id="goodslist">
+                <tr><td>房型id</td><td>酒店名称</td><td>房型价格</td><td>房型类型</td><td>房型大小</td><td>房型设施</td><td>剩余可定数量</td></tr>
+                <tr  th:each="room: ${pageInfo.list}">
+                    <td th:text="${room.roomsId}"></td>
+                    <td th:text="${room.hotelName}"></td>
+                    <td th:text="${room.price}"></td>
+                    <td th:text="${room.type}"></td>
+                    <td th:text="${room.size}"></td>
+                    <td th:text="${room.facility}"></td>
+                    <td th:text="${room.count}"></td>
+                    <td><input type="hidden"  id="roomId" th:value="${room.roomsId}"/>
+                        <button class="btn btn-primary" type="button" id="buyButton" th:onclick="|book(${room.roomsId})|">订购</button>
+<!--                        <a th:href="'/bookRoom?roomId='+${room.roomsId}">订购</a>-->
+                    </td>
+
+                </tr>
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${not pageInfo.isIsFirstPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()-1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <a th:if="${pageInfo.isIsFirstPage()}" href="javascript:void(0);" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="pageNo : ${#numbers.sequence(1, pageInfo.getPages())}">
+                        <a th:if="${pageInfo.getPageNum() eq pageNo}" href="javascript:void(0);">
+                            <span th:text="${pageNo}"></span>
+                        </a>
+
+                        <a th:if="${not (pageInfo.getPageNum() eq pageNo)}" th:href="@{${'hotelList'}(pageNum=${pageNo})}">
+                            <span th:text="${pageNo}"></span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:if="${not pageInfo.isIsLastPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()+1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a th:if="${pageInfo.isIsLastPage()}" href="javascript:void(0);" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+    function book(roomId) {
+        var hotelId = g_getQueryString("hotelId");
+        // debugger;
+        $.ajax({
+            url:"/bookRoom?roomId="+roomId,
+            type:"GET",
+            success:function(data){
+                // debugger;
+                if(data.status == 200){
+                    // window.location.href="/order_detail.htm?orderId="+data.data.id;
+                    getBookResult(roomId);
+                    layer.msg("订购成功!");
+                }else{
+                    window.location.    href="/login";
+                    layer.msg(data.msg);
+                }
+                // debugger;
+            },
+            error:function(){
+                layer.msg("客户端请求有误");
+            }
+        });
+    }
+
+
+    function getBookResult(roomId){
+        g_showLoading();
+        $.ajax({
+            url:"/result?roomId=" + roomId,
+            type:"GET",
+            success:function(data){
+                debugger;
+                if(data.status == 200){
+                    debugger;
+                    var result = data.data;
+                    if(result < 0){
+                        layer.msg("对不起，订购失败！");
+                    }else if (result == 0){
+                        //继续轮询
+                        setTimeout(function () {
+                            getBookResult(roomId);
+                        },50);
+                    } else{
+                        layer.confirm("秒杀成功！查看订单？",{btn:["确定","取消"]},
+                            function () {
+                                window.location.href="/order_detail.htm?orderId="+result;
+                            },
+                            function () {
+                                layer.closeAll();
+                            });
+
+                    }
+                }else{
+                    layer.msg(data.msg);
+                }
+            },
+            error:function(){
+                layer.msg("客户端请求有误");
+            }
+        })
+    }
+
+    function getSearchList(){
+        var searchHotelsListForm = $("#searchHotelListForm");
+        debugger;
+        window.location.href="/searchHotelList?"+searchHotelsListForm.serialize()+'&amp;pageNum=1';
+    }
+</script>

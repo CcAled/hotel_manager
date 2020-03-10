@@ -1,0 +1,111 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+	<head>
+		<title>Menu</title>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+		<link href="myOrder_static/css/bootstrap.css" rel='stylesheet' type='text/css' />
+		<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+		<script src="myOrder_static/js/jquery.min.js"></script>
+		 <!-- Custom Theme files -->
+		<link href="myOrder_static/css/style.css" rel='stylesheet' type='text/css' />
+   		 <!-- Custom Theme files -->
+		<!-- jquery -->
+		<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+		<!-- bootstrap -->
+		<link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+		<script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+		<!-- jquery-validator -->
+		<script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+		<script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+		<!-- layer -->
+		<script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+		<!-- md5.js -->
+		<script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+		<!-- common.js -->
+		<script type="text/javascript" th:src="@{/js/common.js}"></script>
+   		 <!---- start-smoth-scrolling---->
+		<script type="text/javascript" src="myOrder_static/js/move-top.js"></script>
+		<script type="text/javascript" src="myOrder_static/js/easing.js"></script>
+		<script type="text/javascript">
+			jQuery(document).ready(function($) {
+				$(".scroll").click(function(event){
+					event.preventDefault();
+					$('html,body').animate({scrollTop:$(this.hash).offset().top},1000);
+				});
+			});
+		</script>
+		 <!---- start-smoth-scrolling---->
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<script type="application/x-javascript"> addEventListener("load", function() { setTimeout(hideURLbar, 0); }, false); function hideURLbar(){ window.scrollTo(0,1); } </script>
+
+		<script>
+			$(function() {
+				var pull 		= $('#pull');
+					menu 		= $('nav ul');
+					menuHeight	= menu.height();
+				$(pull).on('click', function(e) {
+					e.preventDefault();
+					menu.slideToggle();
+				});
+				$(window).resize(function(){
+	        		var w = $(window).width();
+	        		if(w > 320 && menu.is(':hidden')) {
+	        			menu.removeAttr('style');
+	        		}
+	    		});
+			});
+		</script>
+		<!----//End-top-nav-script---->
+	</head>
+	<body>
+
+			<div class="menu-page">
+				<!------ menu-header ----->
+				<div class="menu-header">
+					<div class="container">
+						<h1><span>订单</span> 信息</h1>
+					</div>
+				</div>
+				<!------ menuheader ----->
+			<!----- menu ---->
+			<div class="menu">
+				<!----- main-menus ----->
+				<div class="main-menus menu-menu">
+					<div class="container">
+						<h5><span> </span> 我的订单 <span> </span></h5>
+					<div class="menus-left col-md-6">
+
+						<div class="menus-left-grid" th:each="order,orderStat : ${pageInfo.list}">
+							<div class="item">
+								<h3 id="hotelName" th:text="${order.hotelName}"></h3>
+								<span id="createTime" th:text="${order.createTime}">下单时间</span>
+							</div>
+							<div class="item-line">
+								<span> </span>
+							</div>
+							<div class="item-price">
+								<label>$</label><label id="price" th:text="${order.payment}"></label>
+							</div>
+							<div class="clearfix"> </div>
+						</div>
+
+
+					</div>
+					<div class="clearfix"> </div>
+
+
+				<!----- load- more-items ----->
+
+			</div>
+			<div class="clearfix"> </div>
+					<a class="loadmore" href="javascript:void (0)" onclick="toMyInfo()">返回个人信息页面！<label><span> </span></label></a>
+</body>
+</html>
+<script>
+	function toMyInfo() {
+		var userId = g_getQueryString("userId");
+		window.location.href="MyInfo.htm?userId="+userId;
+	}
+</script>
+

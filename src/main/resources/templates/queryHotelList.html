@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Site Title-->
+    <title>搜索结果</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <!-- Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat:400,700%7CLato%7CRoboto">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/style.css}">
+    <!--[if lt IE 10]>
+    <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;">
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/">
+            <img src="images/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today.">
+        </a>
+    </div>
+    <![endif]-->
+</head>
+<!-- Page-->
+
+<body>
+<div class="page">
+    <!--Section Most popular Cruises-->
+    <!-- Page Header-->
+    <header class="page-head">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+            <nav data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fullwidth" data-md-layout="rd-navbar-fullwidth" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-sm-stick-up-offset="150px" data-lg-stick-up-offset="150px" class="rd-navbar">
+                <div class="rd-navbar-inner">
+                    <!-- RD Navbar Panel-->
+                    <div class="rd-navbar-wrapper">
+                        <div class="rd-navbar-panel">
+                            <!-- RD Navbar Toggle-->
+                            <button data-rd-navbar-toggle=".rd-navbar-nav-wrap" class="rd-navbar-toggle"><span></span></button>
+                            <!-- RD Navbar Brand-->
+                            <div class="rd-navbar-brand"><a href="hotelList?pageNum=1" class="brand-name">
+                                <div class="logo"><img src="/img/logo.png" alt=""></div></a></div>
+                        </div>
+                        <div class="rd-navbar-nav-wrap">
+                            <!-- RD Navbar Nav-->
+                            <ul class="rd-navbar-nav">
+                                <li class="active"><a href="hotelList?pageNum=1"><span class="material-icons-room icon icon-white icon-lg"></span><span>地图</span><span class="triangle"></span></a></li>
+                                <li><a href="hotelList?pageNum=1"><span class="material-icons-group icon icon-white icon-lg"></span><span>我的</span><span class="triangle"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <section class="section-bottom-80 section-top-80">
+        <div class="shell">
+            <div class="range" >
+
+
+                <div class="cell-sm-6 cell-md-4" th:each="hotel,hotelStat : ${pageInfo.list}">
+                    <div class="thumbnail-custom thumbnail-custom-variant-3">
+                        <img th:src="@{${hotel.imgUrl}}" width="370" height="370" />
+                        <div class="caption">
+                            <div th:switch="${hotel.starRate}">
+                                <div th:case="'1'"><span class="material-icons-star icon icon-xs icon-white"></span></span></div>
+                                <div th:case="'2'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                                <div th:case="'3'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                                <div th:case="'4'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                                <div th:case="'5'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                            </div>
+
+                            <h4 id ="hotelName" th:text="${hotel.hotelName}"></h4>
+                            <!--                        <p id ="starRate" th:text="${hotel.starRate}"></p>-->
+                            <div id = "address" class="h4 address" style="color: #ff9a3c" th:text="${hotel.address}"></div>
+                            <p id="sight" th:text="${hotel.sight}"></p>
+                            <!--                        <p>Book by: Dec-10-2015</p>-->
+                            <a th:href="'/hotel_detail.htm?hotelId='+${hotel.hotelId}" data-text="详情" class="btn btn-winona btn-transparent btn-xs">详情</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a th:if="${not pageInfo.isIsFirstPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()-1})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                <a th:if="${pageInfo.isIsFirstPage()}" href="javascript:void(0);" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li th:each="pageNo : ${#numbers.sequence(1, pageInfo.getPages())}">
+                <a th:if="${pageInfo.getPageNum() eq pageNo}" href="javascript:void(0);">
+                    <span th:text="${pageNo}"></span>
+                </a>
+
+                <a th:if="${not (pageInfo.getPageNum() eq pageNo)}" th:href="@{${'hotelList'}(pageNum=${pageNo})}">
+                    <span th:text="${pageNo}"></span>
+                </a>
+            </li>
+
+            <li>
+                <a th:if="${not pageInfo.isIsLastPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()+1})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                <a th:if="${pageInfo.isIsLastPage()}" href="javascript:void(0);" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
+<!-- Java script-->
+<script src="/js/core.min.js"></script>
+<script src="/js/script.js"></script>
+

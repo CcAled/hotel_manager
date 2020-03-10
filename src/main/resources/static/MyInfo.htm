@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>个人信息</title>
+      <link rel="stylesheet" type="text/css" href="/css/myInfostyle.css">
+      <link rel="stylesheet" type="text/css" href="/css/font-awesome.css">
+      <link rel="stylesheet" type="text/css" href="/css/animate.css">
+      <link rel="shortcut icon" href="/img/fav.ico" type="image/x-icon">
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <!-- jquery -->
+      <script type="text/javascript" src="js/jquery.min.js"></script>
+      <!-- bootstrap -->
+      <link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+      <script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+      <!-- jquery-validator -->
+      <script type="text/javascript" src="jquery-validation/jquery.validate.min.js"></script>
+      <script type="text/javascript" src="jquery-validation/localization/messages_zh.min.js"></script>
+      <!-- layer -->
+      <script type="text/javascript" src="layer/layer.js"></script>
+      <!-- md5.js -->
+      <script type="text/javascript" src="js/md5.min.js"></script>
+      <!-- common.js -->
+      <script type="text/javascript" src="js/common.js"></script>
+   </head>
+   <body>
+      <!--Card-->
+      <div class="card animated fadeIn">
+         <center><img class="center animated rollIn" src="/img/ava.png" alt="avatar"></center>
+         <hr>
+         <div class="name">
+            用户名:<div id="username"></div>
+         </div>
+         <label>性别:</label><p class="subtitle" id="sex">性别:</p>
+         <label>手机号:</label><p class="subtitle" id="phone">手机号:</p>
+         <label>电子邮箱:</label><p class="subtitle" id="email">电子邮箱:</p>
+         <label>密保问题:</label><p class="subtitle" id="pwQuestion">密保问题:</p>
+         <label>密保答案:</label><p class="subtitle" id="pwAnswer">密保答案:</p>
+
+         <p class="location"><a href="javascript:void(0)" onclick="toedit()">修改！</a>
+         </p>
+         <p class="icons animated pulse">
+
+            <a href="javascript:void (0)" target="_blank" onclick="toMyOrder()">
+            <span class="fa-stack fa-lg">
+                <i class="fa fa-circle-thin fa-stack-2x"></i>
+                <i class="fa fa-github fa-stack-1x"></i>
+            </span>
+            </a>
+         </p>
+      </div>
+      <!--footer-->
+
+   </body>
+</html>
+<script>
+   function toedit() {
+      var userId = g_getQueryString("userId");
+      window.location.href="editMyInfo.htm?userId="+userId;
+   }
+   function toMyOrder() {
+      var userId = g_getQueryString("userId");
+      window.location.href="myOrder?userId="+userId+"&pageNum=1";
+   }
+   function render(detail) {
+      debugger;
+      $("#username").text(detail.username);
+      $("#sex").text(detail.sex);
+      $("#phone").text(detail.phone);
+      $("#email").text(detail.email);
+      $("#pwQuestion").text(detail.pwQuestion);
+      $("#pwAnswer").text(detail.pwAnswer);
+      debugger;
+   }
+
+   $(function(){
+      //countDown();
+      getDetail();
+   });
+
+   function getDetail(){
+      debugger;
+      var userId = g_getQueryString("userId");
+      $.ajax({
+         url:"/myInfo/"+userId,
+         type:"GET",
+         success:function(data){
+            if(data.status == 200){
+               debugger;
+               render(data.data);
+            }else{
+               layer.msg(data.msg);
+            }
+         },
+         error:function(){
+            debugger;
+            layer.msg("客户端请求有误");
+         }
+      });
+   }
+
+   function refreshVerifyCode() {
+      $("#verifyCodeImg").attr("src","/seckill/verifyCode?goodsId="+$("#goodsId").val()+"&timestamp="+new Date().getTime());
+   }
+</script>

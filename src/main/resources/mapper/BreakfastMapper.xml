@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhou.mapper.BreakfastMapper" >
+  <resultMap id="BaseResultMap" type="com.zhou.pojo.Breakfast" >
+    <id column="hotel_id" property="hotelId" jdbcType="INTEGER" />
+    <result column="img_url1" property="imgUrl1" jdbcType="VARCHAR" />
+    <result column="img_url2" property="imgUrl2" jdbcType="VARCHAR" />
+    <result column="img_url3" property="imgUrl3" jdbcType="VARCHAR" />
+    <result column="img_url4" property="imgUrl4" jdbcType="VARCHAR" />
+    <result column="img_url5" property="imgUrl5" jdbcType="VARCHAR" />
+    <result column="img_url6" property="imgUrl6" jdbcType="VARCHAR" />
+    <result column="img_url7" property="imgUrl7" jdbcType="VARCHAR" />
+    <result column="img_url8" property="imgUrl8" jdbcType="VARCHAR" />
+    <result column="img_url9" property="imgUrl9" jdbcType="VARCHAR" />
+    <result column="img_url10" property="imgUrl10" jdbcType="VARCHAR" />
+    <result column="img_url11" property="imgUrl11" jdbcType="VARCHAR" />
+  </resultMap>
+
+</mapper>

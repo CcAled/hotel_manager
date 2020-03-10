@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>房间类型页面</title>
+
+    <link rel="stylesheet" href="/css/reset.css"> <!-- CSS reset -->
+    <link rel="stylesheet" type="text/css" href="/css/demo.css">
+    <link rel="stylesheet" href="/css/roomListStyle.css"> <!-- Resource style -->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+
+</head>
+<body>
+<section class="cd-intro">
+    <header class="htmleaf-header">
+        <h1> 房间类型</h1>
+    </header>
+</section> <!-- .cd-intro -->
+
+<section class="cd-products-comparison-table">
+    <header>
+        <h2>房间对比</h2>
+
+    </header>
+
+    <div class="cd-products-table">
+        <div class="features">
+            <div class="top-info">房间样式</div>
+            <ul class="cd-features-list">
+                <li>房间类型</li>
+                <li>价格</li>
+                <li>房间大小</li>
+                <li>房间设施</li>
+
+
+            </ul>
+        </div> <!-- .features -->
+
+        <div class="cd-products-wrapper">
+            <ul class="cd-products-columns">
+
+                <li class="product" th:each="room: ${pageInfo.list}">
+                    <div class="top-info">
+                        <div class="check"></div>
+                        <img src="/img/timg.jpg" alt="room image">
+                        <h3 id="roomId"></h3>
+                    </div> <!-- .top-info -->
+
+                    <ul class="cd-features-list">
+                        <li id="type" th:text="${room.type}"></li>
+                        <li id="price" th:text="${room.price}"></li>
+                        <li id="size" th:text="${room.size}"></li>
+                        <li id="facility" th:text="${room.facility}"></li>
+                        <li>
+                            <button class="btn btn-primary" type="button" id="buyButton"
+                                    th:onclick="|book(${room.roomsId})|">订购
+                            </button>
+                            <button class="btn btn-info" id="add1" data-toggle="modal" data-target="#addActive">房客信息</button>
+                        </li>
+
+                    </ul>
+                </li> <!-- .product -->
+
+
+            </ul> <!-- .cd-products-columns -->
+        </div> <!-- .cd-products-wrapper -->
+        <img id="verifyCodeImg" width="80" height="32" style="display:none" ONCLICK="refreshVerifyCode()"/>
+        <input id="verifyCode" class="form-control/" style="display:none"/>
+        <ul class="cd-table-navigation">
+            <li><a href="#0" class="prev inactive">Prev</a></li>
+            <li><a href="#0" class="next">Next</a></li>
+        </ul>
+    </div> <!-- .cd-products-table -->
+
+
+        <!-- 模态框 -->
+        
+    <div class="modal fade" id="addActive" tabindex="-1" role="dialog" aria-labelledby="activeModalLabel">
+                
+        <div class="modal-dialog modal-lg" style="margin-top: 130px;">  
+                        
+            <div class="modal-content integralPart">
+                                
+                <div class="modal-header">
+                                        
+                    <button type="button" class="close" data-dismiss="modal">
+                                                <span aria-hidden="true">&times;</span>
+                                            
+                    </button>
+                                        <h4 class="modal-title" id="activeModalLabel">新增房客</h4>
+                                    
+                </div>
+                                
+                <div class="modal-body" style="padding: 0px;">
+                                        
+                    <form class="form_active" id="activetask" name="active_task">                                      
+                                                 
+                                                
+
+                        <!-- 主办单位 -->
+                                                
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-4">
+                                                            
+                            </div>
+                                                        
+                            <div class="col-md-2" style="margin-top:5px;">
+                                                                <input type="button" class="btn btn-info add_host_unit"
+                                                                       value="+">
+                                                            
+                            </div>
+                                                    
+                        </div>
+                                            
+                    </form>
+                                    
+                </div>
+                                
+                <div class="modal-footer">
+                                        
+                    <div style="width:100%;border:1px solid #CCC;margin-top:478px;"></div>
+                                        
+                    <div class=" col-md-offset-4 control-label"  style="margin: -8px 340px;">
+                                                <input type="button"  class="btn btn-primary"  value="创建活动"
+                                                       onclick="activeForm()">                                
+                                            
+                    </div>
+                                    
+                </div>
+                                            
+                            
+            </div>
+                    
+        </div>
+            
+    </div>
+</section> <!-- .cd-products-comparison-table -->
+
+
+</body>
+</html>
+<script>
+    $(function () {
+        var hotelId = g_getQueryString("hotelId");
+        debugger;
+        showVerifyCode(hotelId);
+    });
+
+    function showVerifyCode(hotelId) {
+        $("#verifyCodeImg").attr("src", "/verifyCode?hotelId=" + hotelId);
+        $("#verifyCodeImg").show();
+        $("#verifyCode").show();
+    }
+
+    function book(roomId) {
+        var hotelId = g_getQueryString("hotelId");
+        var verifyCode = $("#verifyCode").val();
+        // debugger;
+        $.ajax({
+            url: "/bookRoom?roomId=" + roomId + "&verifyCode=" + verifyCode,
+            type: "GET",
+            success: function (data) {
+                debugger;
+                if (data.status == 200) {
+                    // window.location.href="/order_detail.htm?orderId="+data.data.id;
+                    getBookResult(roomId);
+                    layer.msg("订购成功!");
+                } else if (data.status == 503) {
+                    layer.msg(data.msg);
+                } else if (data.status == 504) {
+                    layer.msg(data.msg);
+                } else if (data.status == 505) {
+                    layer.msg(data.msg);
+                } else {
+                    window.location.href = "/login";
+                    layer.msg(data.msg);
+                }
+                // debugger;
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        });
+    }
+
+
+    function getBookResult(roomId) {
+        g_showLoading();
+        $.ajax({
+            url: "/result?roomId=" + roomId,
+            type: "GET",
+            success: function (data) {
+                debugger;
+                if (data.status == 200) {
+                    debugger;
+                    var result = data.data;
+                    if (result < 0) {
+                        layer.msg("对不起，订购失败！");
+                    } else if (result == 0) {
+                        //继续轮询
+                        setTimeout(function () {
+                            getBookResult(roomId);
+                        }, 50);
+                    } else {
+                        layer.confirm("下单成功！查看订单？", {btn: ["确定", "取消"]},
+                            function () {
+                                window.location.href = "/order_detail.htm?orderId=" + result;
+                            },
+                            function () {
+                                layer.closeAll();
+                            });
+
+                    }
+                } else {
+                    debugger;
+                    layer.msg(data.msg);
+                }
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        })
+    }
+
+    function getSearchList() {
+        var searchHotelsListForm = $("#searchHotelListForm");
+        debugger;
+        window.location.href = "/searchHotelList?" + searchHotelsListForm.serialize() + '&amp;pageNum=1';
+    }
+
+    function refreshVerifyCode() {
+        var hotelId = g_getQueryString("hotelId");
+        $("#verifyCodeImg").attr("src", "/verifyCode?hotelId=" + hotelId + "&timestamp=" + new Date().getTime());
+    }
+
+    function add_input(str, div_name, div_name2, pla, img_class) {
+        //添加
+        $("." + str).click(function () {
+            //使用模板字符串生成input元素
+            var div = `<div><lable>真实姓名<label><div class="col-md-10"> <input type="text" name=${div_name} class="form-control"  placeholder=${pla} value="" maxlength="20"></div> <div class="col-md-2"><input type="button" class="btn btn-success ${img_class}" value="-"></div></div>`;
+            var div2 = `<div><lable>身份证号<label><div class="col-md-10"> <input type="text" name=${div_name2} class="form-control"  placeholder=${pla} value="" maxlength="20"></div> <div class="col-md-2"><input type="button" class="btn btn-success ${img_class}" value="-"></div></div>`;
+            div = div + div2;
+            $(this).parent().prev().append(div);
+        });
+        //移除
+        $("." + str).parent().prev().on("click", "." + img_class, function () {
+            $(this).parent().parent().remove();
+        });
+    }
+
+    /**调用封装的函数**/
+    //主办单位
+    debugger;
+    add_input("add_host_unit", "realname", "id_number", "请输主办单位名称", "cut_host_unit");
+
+
+    //函数封装-提交任务单
+    function activeForm() {
+        //获取主办方填写内容
+        var realname = [];
+        $("input[name='realname']").each(function (i) {
+            realname[i] = $(this).val()
+        });
+        console.log(realname, "真名数组");
+        //获取主办单位填写内容
+        var id_number = [];
+        $("input[name='id_number']").each(function (i) {
+            id_number[i] = $(this).val()
+        });
+        console.log(id_number, "身份证数组");
+        debugger;
+        return false;
+        //测试打断, 下面的url仅是参数，如需使用需在调用时，换上真的url后台接口
+        //验证数据为空:
+        if (result_unit == "" || result_guests == "") {
+            toast("请先补全信息！");
+            return false;
+        } else {
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: {realname: realname, id_number: id_number},
+                success: function (data) {
+                    console.log(data, "data.infor.inviter");
+                    if (data.code == 200) {
+                        toast(data.msg);
+                        $("#addActive").modal('hide');
+                    } else {
+                        toast(data.msg);
+                    }
+                },
+                error: function (err) {
+                    toast("请求i错误请检查!");
+                }
+            });
+        }
+    }
+</script>

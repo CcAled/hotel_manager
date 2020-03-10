@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>订单详情</title>
+<link type="text/css" rel="stylesheet" href="/css/detailStyle.css">
+  <!-- jquery -->
+  <script type="text/javascript" src="/js/jquery.min.js"></script>
+  <!-- bootstrap -->
+  <link rel="stylesheet" type="text/css" href="/bootstrap/css/bootstrap.min.css" />
+  <script type="text/javascript" src="/bootstrap/js/bootstrap.min.js"></script>
+  <!-- jquery-validator -->
+  <script type="text/javascript" src="/jquery-validation/jquery.validate.min.js"></script>
+  <script type="text/javascript" src="/jquery-validation/localization/messages_zh.min.js"></script>
+  <!-- layer -->
+  <script type="text/javascript" src="/layer/layer.js"></script>
+  <!-- md5.js -->
+  <script type="text/javascript" src="/js/md5.min.js"></script>
+  <!-- common.js -->
+  <script type="text/javascript" src="/js/common.js"></script>
+</head>
+
+<body>
+<div class="container">
+  <div class="receipt">
+    <h2 class="receipt__title">订单详情</h2>
+    <p class="receipt__subtitle">以下是您的订单。</p>
+    <ul class="receipt__lines">
+      <li class="receipt__line">
+        <span class="receipt__line__item">酒店名称</span>
+        <span class="receipt__line__price" id ="hotelName"></span>
+      </li>
+      <li class="receipt__line">
+        <span class="receipt__line__item">房间类型</span>
+        <span class="receipt__line__price" id="type"></span>
+      </li>
+      <li class="receipt__line">
+        <span class="receipt__line__item">数量</span>
+        <span class="receipt__line__price">×1</span>
+      </li>
+      <li class="receipt__line">
+        <span class="receipt__line__item">订单创建时间</span>
+        <span class="receipt_id_line__price" id="createTime"></span>
+      </li>
+      <li class="receipt__line">
+        <span class="receipt__line__item">订单状态</span>
+        <span class="receipt_id_line__price" id="state"></span>
+      </li>
+    </ul>
+    <p class="receipt__total">
+      <span class="receipt__total__item">合计：</span>
+      <span class="receipt__total__price" id="payment"></span>
+    </p>
+    <p class="receipt__back">
+      <a href="/hotelList">返回主页</a>
+    </p>
+  </div>
+</div>
+</body>
+</html>
+<script>
+  function render(detail) {
+    var room = detail.roomsVo;
+    var order = detail.order;
+    $("#hotelName").text(room.hotelName);
+    $("#type").text(room.type);
+    $("#payment").text(order.payment);
+    $("#createTime").text(new Date(order.createTime).format("yyyy-MM-dd hh:mm:ss"));
+    $("#state").text(order.state);
+  }
+  $(function () {
+    getOrderDetail();
+  })
+  function getOrderDetail() {
+    var orderId = g_getQueryString("orderId");
+    debugger;
+    $.ajax({
+      url:"/detail?orderId=" + orderId,
+      type:"GET",
+      success:function(data){
+        debugger;
+        if(data.status == 200){
+          debugger;
+          render(data.data)
+        }else{
+          layer.msg(data.msg);
+        }
+      },
+      error:function(){
+        layer.msg("客户端请求有误");
+      }
+    })
+  }
+
+</script>

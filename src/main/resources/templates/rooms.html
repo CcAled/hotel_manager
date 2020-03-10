@@ -1,0 +1,379 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]>
+<html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>
+<html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>
+<html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>
+<html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!-->
+<html class="" lang="en" xmlns:th="http://www.w3.org/1999/xhtml"><!--<![endif]-->
+<head>
+    <meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}"/>
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+    <title>房间信息</title>
+
+    <!-- Standard Favicon -->
+    <link rel="icon" type="image/x-icon" href="images//favicon.ico"/>
+
+    <!-- For iPhone 4 Retina display: -->
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images//apple-touch-icon-114x114-precomposed.png">
+
+    <!-- For iPad: -->
+    <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images//apple-touch-icon-72x72-precomposed.png">
+
+    <!-- For iPhone: -->
+    <link rel="apple-touch-icon-precomposed" href="images//apple-touch-icon-57x57-precomposed.png">
+
+    <!-- Library - Google Font Familys -->
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic'
+          rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,700,700i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i"
+          rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="revolution/css/settings.css">
+
+    <!-- RS5.0 Layers and Navigation Styles -->
+    <link rel="stylesheet" type="text/css" href="revolution/css/layers.css">
+    <link rel="stylesheet" type="text/css" href="revolution/css/navigation.css">
+
+    <!-- Library - Bootstrap v3.3.5 -->
+    <link rel="stylesheet" type="text/css" href="libraries/lib.css">
+
+    <!-- Custom - Common CSS -->
+    <link rel="stylesheet" type="text/css" href="css/plugins.css">
+    <link rel="stylesheet" type="text/css" href="css/navigation-menu.css">
+
+    <!-- Custom - Theme CSS -->
+    <link rel="stylesheet" type="text/css" href="css/hotelDetailStyle.css">
+
+    <!--[if lt IE 9]>
+    <script src="js/html5/respond.min.js"></script>
+    <![endif]-->
+
+</head>
+
+<body data-offset="200" data-spy="scroll" data-target=".ow-navigation">
+<!-- Loader -->
+<!--div id="site-loader" class="load-complete">
+    <div class="loader">
+        <div class="loader-inner ball-clip-rotate">
+            <div></div>
+        </div>
+    </div>
+</div--><!-- Loader /- -->
+
+<!-- Header -->
+
+<!-- Top Header -->
+
+
+<!-- Menu Block -->
+
+</header><!-- Header /- -->
+
+<main>
+    <!-- Page Banner -->
+    <div class="page-banner gallery-banner room-banner container-fluid no-padding">
+        <div class="banner-content">
+            <h3>房间信息</h3>
+            <ol class="breadcrumb">
+                <li><a href="javascript:history.back(-1)" title="Home">酒店信息</a></li>
+                <li class="active">房间信息</li>
+            </ol>
+        </div>
+    </div><!-- Page Banner /- -->
+
+    <!-- Offer Section -->
+    <div class="offer-section container-fluid">
+        <!-- Container -->
+        <div class="container">
+            <!-- Section Header -->
+            <div class="section-header section-header-2">
+                <h3>我们能够提供的房间类型</h3>
+            </div><!-- Section Header /- -->
+            <div class="offer-carousel">
+
+                <div class="col-md-12 col-sm-12 col-xs-12" th:each="room: ${pageInfo.list}">
+                    <div class="offer-box">
+                        <i><img src="images/offer-1.jpg" alt="offer"></i>
+                        <div class="offer-content">
+                            <h5 id="type" th:text="${room.type}">房间类型</h5>
+                            <p id="facility" th:text="${room.facility}">房间设施</p>
+                            <p id="size" th:text="${room.size}">房间设施</p>
+                            <span id="price" th:text="${room.price}"></span>
+                            <a class="zoom" href="images/offer-1.jpg" title="offer"><i class="fa fa-plus"></i></a>
+                            <a href="javascript:void(0)" title="Book Now" class="book-now"th:onclick="|book(${room.roomsId})|">现在订购！</a>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <img id="verifyCodeImg" width="80" height="32" style="display:none" ONCLICK="refreshVerifyCode()"/>
+            <input id="verifyCode" class="form-control/" style="display:none"/>
+            <button class="btn btn-info" id="add1" data-toggle="modal" data-target="#addActive">房客信息</button>
+
+        </div><!-- Container /- -->
+    </div><!-- Offer Section /- -->
+
+    <div class="modal fade" id="addActive" tabindex="-1" role="dialog" aria-labelledby="activeModalLabel">
+        <div class="modal-dialog modal-lg" style="margin-top: 130px;">  
+            <div class="modal-content integralPart">
+                <div class="modal-header">          
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span></button>
+                     <h4 class="modal-title" id="activeModalLabel">新增房客</h4>
+                </div>  
+                <div class="modal-body" style="padding: 0px;">
+                    <form class="form_active" id="activetask" name="active_task">
+                        <!-- 主办单位 -->             
+                        <div class="col-md-12 form-group">
+                            <div class="col-md-4">                
+                            </div>                       
+                            <div class="col-md-2" style="margin-top:5px;">
+                            <input type="button" class="btn btn-info add_host_unit"value="+">            
+                            </div>                   
+                        </div>                 
+                    </form>      
+                </div>        
+                <div class="modal-footer">   
+                    <div style="width:100%;border:1px solid #CCC;margin-top:478px;"></div>                
+                    <div class=" col-md-offset-4 control-label"  style="margin: -8px 340px;">
+                     <button type="button" class="close" onclick="activeForm()">保存信息</button>
+                    </div>      
+                </div>   
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- Footer Main -->
+<!-- Footer Main /- -->
+
+<!-- JQuery v1.11.3 -->
+<script src="js/jquery.min.js"></script>
+
+<!-- Library - Js -->
+<script src="libraries/lib.js"></script><!-- Bootstrap JS File v3.3.5 -->
+
+<!-- RS5.0 Core JS Files -->
+<script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js?rev=5.0"></script>
+<script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js?rev=5.0"></script>
+<script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
+<script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+<script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+<script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+
+<!-- Library - Google Map API -->
+<!---<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyDW40y4kdsjsz714OVTvrw7woVCpD8EbLE"></script>--->
+
+<!-- Library - Theme JS -->
+<script src="js/functions.js"></script>
+</body>
+</html>
+<script>
+    var realname = [];
+    var id_number = [];
+    $(function () {
+        var hotelId = g_getQueryString("hotelId");
+        debugger;
+        showVerifyCode(hotelId);
+    });
+
+    function showVerifyCode(hotelId) {
+        $("#verifyCodeImg").attr("src", "/verifyCode?hotelId=" + hotelId);
+        $("#verifyCodeImg").show();
+        $("#verifyCode").show();
+    }
+
+    function book(roomId) {
+        var verifyCode = $("#verifyCode").val();
+        $.ajax({
+            url: "/bookRoom?roomId=" + roomId + "&verifyCode=" + verifyCode,
+            type: "POST",
+            data:{
+                realname:realname,
+                id_number:id_number
+            },
+            dataType:"json",
+            traditional:true,//防止深度序列化
+            success: function (data) {
+                debugger;
+                if (data.status == 200) {
+                    // window.location.href="/order_detail.htm?orderId="+data.data.id;
+                    getBookResult(roomId);
+                    layer.msg("订购成功!");
+                } else if (data.status == 503) {
+                    layer.msg(data.msg);
+                } else if (data.status == 504) {
+                    layer.msg(data.msg);
+                } else if (data.status == 505) {
+                    layer.msg(data.msg);
+                } else {
+                    debugger;
+                    window.location.href = "/login";
+                    layer.msg(data.msg);
+                }
+                // debugger;
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        });
+        // var hotelId = g_getQueryString("hotelId");
+        // var verifyCode = $("#verifyCode").val();
+        // var realname = [];
+        // $("input[name='realname']").each(function (i) {
+        //     realname[i] = $(this).val()
+        // });
+        // console.log(realname, "真名数组");
+        // //获取主办单位填写内容
+        // var id_number = [];
+        // $("input[name='id_number']").each(function (i) {
+        //     id_number[i] = $(this).val()
+        // });
+        // console.log(id_number, "身份证数组");
+        // // debugger;
+        // $.ajax({
+        //     url: "/bookRoom?roomId=" + roomId + "&verifyCode=" + verifyCode,
+        //     type: "GET",
+        //     success: function (data) {
+        //         debugger;
+        //         if (data.status == 200) {
+        //             // window.location.href="/order_detail.htm?orderId="+data.data.id;
+        //             getBookResult(roomId);
+        //             layer.msg("订购成功!");
+        //         } else if (data.status == 503) {
+        //             layer.msg(data.msg);
+        //         } else if (data.status == 504) {
+        //             layer.msg(data.msg);
+        //         } else if (data.status == 505) {
+        //             layer.msg(data.msg);
+        //         } else {
+        //             debugger;
+        //             window.location.href = "/login";
+        //             layer.msg(data.msg);
+        //         }
+        //         // debugger;
+        //     },
+        //     error: function () {
+        //         layer.msg("客户端请求有误");
+        //     }
+        // });
+    }
+
+
+    function getBookResult(roomId) {
+        g_showLoading();
+
+        $.ajax({
+            url: "/result?roomId=" + roomId,
+            type: "GET",
+            success: function (data) {
+                debugger;
+                if (data.status == 200) {
+                    debugger;
+                    var result = data.data;
+                    if (result < 0) {
+                        layer.msg("对不起，订购失败！");
+                    } else if (result == 0) {
+                        //继续轮询
+                        setTimeout(function () {
+                            getBookResult(roomId);
+                        }, 50);
+                    } else {
+                        layer.confirm("下单成功！查看订单？", {btn: ["确定", "取消"]},
+                            function () {
+                            debugger;
+                                window.location.href = "/order_detail.htm?orderId=" + result;
+                            },
+                            function () {
+                                layer.closeAll();
+                            });
+
+                    }
+                } else {
+                    debugger;
+                    layer.msg(data.msg);
+                }
+            },
+            error: function () {
+                layer.msg("客户端请求有误");
+            }
+        })
+    }
+
+    function getSearchList() {
+        var searchHotelsListForm = $("#searchHotelListForm");
+        debugger;
+        window.location.href = "/searchHotelList?" + searchHotelsListForm.serialize() + '&amp;pageNum=1';
+    }
+
+    function refreshVerifyCode() {
+        var hotelId = g_getQueryString("hotelId");
+        $("#verifyCodeImg").attr("src", "/verifyCode?hotelId=" + hotelId + "&timestamp=" + new Date().getTime());
+    }
+
+    /**调用封装的函数**/
+    //函数封装写法
+    function  add_input(str,div_name,div_name2,pla,img_class){
+        //添加
+        $("."+str).click(function(){
+            //使用模板字符串生成input元素
+            var div=`<div><lable>真实姓名<label><div class="col-md-10"> <input type="text" name=${div_name} class="form-control"  placeholder=${pla} value="" maxlength="20"></div> <div class="col-md-2"><input type="button" class="btn btn-success ${img_class}" value="-"></div></div>`;
+            var div2 = `<div><lable>身份证号<label><div class="col-md-10"> <input type="text" name=${div_name2} class="form-control"  placeholder=${pla} value="" maxlength="20"></div> <div class="col-md-2"><input type="button" class="btn btn-success ${img_class}" value="-"></div></div>`;
+            div = div + div2;
+            $(this).parent().prev().append(div);
+        });
+        //移除
+        $("."+str).parent().prev().on("click","."+img_class,function(){
+            $(this).parent().parent().remove();
+        });
+    }
+    debugger;
+    add_input("add_host_unit", "realname", "id_number", "", "cut_host_unit");
+
+
+    //函数封装-提交任务单
+    function activeForm() {
+
+        $("input[name='realname']").each(function (i) {
+            realname[i] = $(this).val()
+        });
+        console.log(realname, "真名数组");
+        //获取主办单位填写内容
+        $("input[name='id_number']").each(function (i) {
+            id_number[i] = $(this).val()
+        });
+        console.log(id_number, "身份证数组");
+        debugger;
+        if(realname[0]=="" || id_number[0]==""){
+            toast("请先补全信息！");
+            return false;
+        }
+    }
+</script>

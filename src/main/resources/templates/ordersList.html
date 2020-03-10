@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>订单列表</title> <!--这是酒店列表-->
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+</head>
+<body>
+<!-- 用户信息列表 jqgrid start -->
+<div class="row">
+
+
+    <div class="col-md-12">
+        <br/>
+        <div class="panel-heading">订单信息列表</div>
+        <div class="usersList_wrapper">
+            <table class="table" id="goodslist">
+                <tr><td>用户id</td><td>酒店名称</td><td>订单状态</td><td>创建时间</td><td>金额</td>
+                <tr  th:each="order,orderStat : ${pageInfo.list}">
+                    <td th:text="${order.userId}"></td>
+                    <td th:text="${order.hotelName}"></td>
+                    <td th:text="${order.state}"></td>
+                    <td th:text="${order.createTime}"></td>
+                    <td th:text="${order.payment}"></td>
+                    <td><a th:href="'/order_detail.htm?orderId='+${order.orderId}">详情</a></td>
+                </tr>
+            </table>
+
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${not pageInfo.isIsFirstPage()}" th:href="@{${'usersList'}(pageNum=${pageInfo.getPageNum()-1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <a th:if="${pageInfo.isIsFirstPage()}" href="javascript:void(0);" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="pageNo : ${#numbers.sequence(1, pageInfo.getPages())}">
+                        <a th:if="${pageInfo.getPageNum() eq pageNo}" href="javascript:void(0);">
+                            <span th:text="${pageNo}"></span>
+                        </a>
+
+                        <a th:if="${not (pageInfo.getPageNum() eq pageNo)}" th:href="@{${'usersList'}(pageNum=${pageNo})}">
+                            <span th:text="${pageNo}"></span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:if="${not pageInfo.isIsLastPage()}" th:href="@{${'usersList'}(pageNum=${pageInfo.getPageNum()+1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a th:if="${pageInfo.isIsLastPage()}" href="javascript:void(0);" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

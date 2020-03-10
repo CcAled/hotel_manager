@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>商品列表</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+    <!-- jquery -->
+    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+    <!-- bootstrap -->
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+    <!-- jquery-validator -->
+    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+    <!-- layer -->
+    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+    <!-- md5.js -->
+    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+    <!-- common.js -->
+    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+</head>
+<body>
+<!-- 用户信息列表 jqgrid start -->
+<div class="row">
+
+    <!-- 搜索内容 -->
+<!--    <div class="col-md-12">-->
+<!--        <br/>-->
+<!--        <form id="searchUserListForm" class="form-inline" method="post" role="form">-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="hotelName">酒店名:</label>-->
+<!--                <input id="hotelName" name="hotelName" type="text" class="form-control" placeholder="酒店名" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="starRate">酒店星级:</label>-->
+<!--                <input id="starRate" name="starRate" type="text" class="form-control" placeholder="酒店星级" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="address">酒店地址:</label>-->
+<!--                <input id="address" name="address" type="text" class="form-control" placeholder="酒店地址" />-->
+<!--            </div>-->
+<!--            <div class="form-group">-->
+<!--                <label class="sr-only" for="facility">酒店设施:</label>-->
+<!--                <input id="facility" name="facility" type="text" class="form-control" placeholder="酒店设施" />-->
+<!--            </div>-->
+<!--            <button id="searchUserListButton" class="btn yellow-casablanca" type="button" onclick="getSearchList()">搜    索</button>-->
+<!--        </form>-->
+<!--    </div>-->
+
+
+    <div class="col-md-12">
+        <br/>
+        <div class="panel-heading">酒店信息列表</div>
+        <div class="usersList_wrapper">
+            <table class="table" id="goodslist">
+                <tr><td>酒店id</td><td>酒店图片</td><td>酒店名称</td><td>酒店星级</td><td>酒店地址</td><td>酒店设施</td><td>附近地标风景</td><td>早餐信息</td></tr>
+                <tr  th:each="hotel,goodsStat : ${pageInfo.list}">
+                    <td th:text="${hotel.hotelId}"></td>
+                    <td ><img th:src="@{${hotel.imgUrl}}" width="100" height="100" /></td>
+                    <td th:text="${hotel.hotelName}"></td>
+                    <td th:text="${hotel.starRate}"></td>
+                    <td th:text="${hotel.address}"></td>
+                    <td th:text="${hotel.facility}"></td>
+                    <td th:text="${hotel.sight}"></td>
+                    <td th:text="${hotel.breakfast}"></td>
+                    <td><a th:href="'/goods_detail.htm?goodsId='+${hotel.hotelId}">详情</a></td>
+                </tr>
+            </table>
+            <nav>
+                <ul class="pagination">
+                    <li>
+                        <a th:if="${not pageInfo.isIsFirstPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()-1})}" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                        <a th:if="${pageInfo.isIsFirstPage()}" href="javascript:void(0);" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+
+                    <li th:each="pageNo : ${#numbers.sequence(1, pageInfo.getPages())}">
+                        <a th:if="${pageInfo.getPageNum() eq pageNo}" href="javascript:void(0);">
+                            <span th:text="${pageNo}"></span>
+                        </a>
+
+                        <a th:if="${not (pageInfo.getPageNum() eq pageNo)}" th:href="@{${'hotelList'}(pageNum=${pageNo})}">
+                            <span th:text="${pageNo}"></span>
+                        </a>
+                    </li>
+
+                    <li>
+                        <a th:if="${not pageInfo.isIsLastPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()+1})}" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                        <a th:if="${pageInfo.isIsLastPage()}" href="javascript:void(0);" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+    </div>
+</div>
+
+</body>
+</html>

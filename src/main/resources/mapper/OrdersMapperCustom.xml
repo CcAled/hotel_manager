@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zhou.mapper.OrdersMapperCustom" >
+  <resultMap id="BaseResultMap" type="com.zhou.vo.OrdersVo" >
+    <id column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="user_id" property="userId" jdbcType="INTEGER" />
+    <result column="room_id" property="roomId" jdbcType="INTEGER" />
+    <result column="hotel_id" property="hotelId" jdbcType="INTEGER" />
+    <result column="hotel_name" property="hotelName" jdbcType="VARCHAR" />
+    <result column="state" property="state" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="payment" property="payment" jdbcType="INTEGER" />
+  </resultMap>
+  <select id="queryMyOrders" resultMap="BaseResultMap" parameterType="Integer">
+    select o.*,h.hotel_name as hotelName
+    from orders o
+    left join hotels h on o.hotel_id = h.hotel_id
+  	where o.user_id = #{userId}
+  </select>
+  <select id="selectAllOrdersList" resultMap="BaseResultMap" >
+    select o.*,h.hotel_name as hotelName
+    from orders o
+    left join hotels h on o.hotel_id = h.hotel_id
+  </select>
+</mapper>

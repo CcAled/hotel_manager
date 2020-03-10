@@ -1,0 +1,213 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]> <html class="ie6"> <![endif]-->
+<!--[if IE 7 ]>    <html class="ie7"> <![endif]-->
+<!--[if IE 8 ]>    <html class="ie8"> <![endif]-->
+<!--[if IE 9 ]>    <html class="ie9"> <![endif]-->
+<!--[if (gt IE 9)|!(IE)]><!--><html class="" lang="en"><!--<![endif]-->
+<head>
+	<meta charset="utf-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <meta name="description" content="">
+    <meta name="author" content="">
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<!-- jquery -->
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+	<!-- bootstrap -->
+	<link rel="stylesheet" type="text/css" href="bootstrap/css/bootstrap.min.css" />
+	<script type="text/javascript" src="bootstrap/js/bootstrap.min.js"></script>
+	<!-- jquery-validator -->
+	<script type="text/javascript" src="jquery-validation/jquery.validate.min.js"></script>
+	<script type="text/javascript" src="jquery-validation/localization/messages_zh.min.js"></script>
+	<!-- layer -->
+	<script type="text/javascript" src="layer/layer.js"></script>
+	<!-- md5.js -->
+	<script type="text/javascript" src="js/md5.min.js"></script>
+	<!-- common.js -->
+	<script type="text/javascript" src="js/common.js"></script>
+
+	<title>酒店详情</title>
+
+	<!-- Standard Favicon -->
+	<link rel="icon" type="image/x-icon" href="images//favicon.ico" />
+	
+	<!-- For iPhone 4 Retina display: -->
+	<link rel="apple-touch-icon-precomposed" sizes="114x114" href="images//apple-touch-icon-114x114-precomposed.png">
+	
+	<!-- For iPad: -->
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="images//apple-touch-icon-72x72-precomposed.png">
+	
+	<!-- For iPhone: -->
+	<link rel="apple-touch-icon-precomposed" href="images//apple-touch-icon-57x57-precomposed.png">
+
+	<!-- Library - Google Font Familys -->	
+	<link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,300italic,400italic,600,600italic,700,700italic,800,800italic' rel='stylesheet' type='text/css'>
+	<link href="https://fonts.googleapis.com/css?family=Vollkorn:400,400i,700,700i" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto:100,100i,300,300i,400,400i,500,500i,700,700i,900,900i" rel="stylesheet">
+	
+	<link rel="stylesheet" type="text/css" href="revolution/css/settings.css">
+ 
+	<!-- RS5.0 Layers and Navigation Styles -->
+	<link rel="stylesheet" type="text/css" href="revolution/css/layers.css">
+	<link rel="stylesheet" type="text/css" href="revolution/css/navigation.css">
+	
+	<!-- Library - Bootstrap v3.3.5 -->
+    <link rel="stylesheet" type="text/css" href="libraries/lib.css">
+	
+	<!-- Custom - Common CSS -->
+	<link rel="stylesheet" type="text/css" href="css/plugins.css">
+	<link rel="stylesheet" type="text/css" href="css/navigation-menu.css">	
+	
+	<!-- Custom - Theme CSS -->
+	<link rel="stylesheet" type="text/css" href="css/hotelDetailStyle.css">
+	
+	<!--[if lt IE 9]>
+		<script src="js/html5/respond.min.js"></script>
+    <![endif]-->
+	
+</head>
+
+<body data-offset="200" data-spy="scroll" data-target=".ow-navigation">
+	<!-- Loader -->
+	<!--div id="site-loader" class="load-complete">
+		<div class="loader">
+			<div class="loader-inner ball-clip-rotate">
+				<div></div>
+			</div>
+		</div>
+	</div--><!-- Loader /- -->
+	
+	<!-- Header -->
+
+
+	<main>
+		<!-- Page Banner -->
+		<div class="page-banner about-banner container-fluid no-padding">
+			<div class="banner-content">
+				<h3>酒店详情</h3>
+				<ol class="breadcrumb">
+					<li><a href="javascript:void(0)" title="Home" onclick="getRooms()">房型列表</a></li>
+					<li class="active">酒店详情</li>
+					<li><a href="javascript:void(0)" title="Home" onclick="getBreakfast()">早餐详情</a></li>
+				</ol>
+			</div>
+		</div><!-- Page Banner /- -->
+		
+		<!-- Welcome Section -->
+		<div class="welcome-section container-fluid">
+			<!-- Container -->
+			<div class="container">
+				<!-- Section Header -->
+				<div class="section-header section-header-2">
+					<h3>欢迎来到 <span id="hotelName"></span> 的酒店介绍</h3>
+
+					<br>
+					<br>
+
+				<div class="welcome-content">
+					<p id="facility">酒店设施</p>
+				</div>
+				<div class="welcome-content">
+					<p id="description">酒店介绍</p>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-6 welcome-outer">
+					<div class="welcome-box">
+						<span>地址</span>
+						<p id="address"></p>
+						<i class="icon icon-Cup"></i>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-6 welcome-outer">
+					<div class="welcome-box">
+						<span>早餐信息</span>
+						<p id="breakfast"></p>
+						<i class="icon icon-Starship"></i>
+					</div>
+				</div>
+				<div class="col-md-4 col-sm-6 col-xs-6 welcome-outer">
+					<div class="welcome-box">
+						<span>周围的景点</span>
+						<p id="sight"></p>
+						<i class="icon icon-Bag"></i>
+					</div>
+				</div>
+			</div><!-- Container / -->
+		</div><!-- Welcome Section /- -->
+		
+		<!-- Whychooseus Section -->
+
+		<!-- Clients -->
+
+
+	<!-- Footer Main -->
+
+	<!-- JQuery v1.11.3 -->
+	<script src="js/jquery.min.js"></script>
+
+	<!-- Library - Js -->
+	<script src="libraries/lib.js"></script><!-- Bootstrap JS File v3.3.5 -->
+	
+	<!-- RS5.0 Core JS Files -->
+	<script type="text/javascript" src="revolution/js/jquery.themepunch.tools.min.js?rev=5.0"></script>
+	<script type="text/javascript" src="revolution/js/jquery.themepunch.revolution.min.js?rev=5.0"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.video.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.slideanims.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.layeranimation.min.js"></script>
+	<script type="text/javascript" src="revolution/js/extensions/revolution.extension.navigation.min.js"></script>
+
+	<!-- Library - Google Map API -->
+	<!---<script src="http://ditu.google.cn/maps/api/js?key=AIzaSyDW40y4kdsjsz714OVTvrw7woVCpD8EbLE"></script>--->
+	
+	<!-- Library - Theme JS -->
+	<script src="js/functions.js"></script>
+</body>
+</html>
+
+<script>
+	function getBreakfast() {
+		var hotelId = g_getQueryString("hotelId");
+		window.location.href="breakfast?hotelId="+hotelId;
+	}
+	function getRooms() {
+		var hotelId = g_getQueryString("hotelId");
+		window.location.href="/roomsList?hotelId="+hotelId+'&amp;pageNum=1';
+	}
+	function render(detail) {
+		$("#hotelName").text(detail.hotelName);
+		$("#address").text(detail.address);
+		$("#sight").text(detail.sight);
+		$("#facility").text(detail.facility);
+		$("#breakfast").text(detail.breakfast);
+		$("#description").text(detail.description);
+		debugger;
+	}
+
+	$(function(){
+		//countDown();
+		getDetail();
+	});
+
+	function getDetail(){
+		debugger;
+		var hotelId = g_getQueryString("hotelId");
+		$.ajax({
+			url:"/detail/"+hotelId,
+			type:"GET",
+			success:function(data){
+				if(data.status == 200){
+					render(data.data);
+				}else{
+					layer.msg(data.msg);
+				}
+			},
+			error:function(){
+				layer.msg("客户端请求有误");
+			}
+		});
+	}
+
+
+</script>
+</html>

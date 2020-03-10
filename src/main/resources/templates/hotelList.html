@@ -1,0 +1,261 @@
+﻿<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <!-- Site Title-->
+    <title>酒店列表</title>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta charset="utf-8">
+    <!-- Stylesheets-->
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Montserrat:400,700%7CLato%7CRoboto">
+    <link rel="stylesheet" th:href="@{/bootstrap/css/style.css}">
+    <!--[if lt IE 10]>
+    <div style="background: #212121; padding: 10px 0; box-shadow: 3px 3px 5px 0 rgba(0,0,0,.3); clear: both; text-align:center; position: relative; z-index:1;">
+        <a href="http://windows.microsoft.com/en-US/internet-explorer/">
+            <img src="images/warning_bar_0000_us.jpg" border="0" height="42" width="820" alt="You are using an outdated browser. For a faster, safer browsing experience, upgrade for free today.">
+        </a>
+    </div>
+    <![endif]-->
+</head>
+<!-- Page-->
+
+<body>
+<div class="page">
+    <!--Section Most popular Cruises-->
+    <!-- Page Header-->
+    <header class="page-head">
+        <!-- RD Navbar-->
+        <div class="rd-navbar-wrap">
+            <nav data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fullwidth" data-md-layout="rd-navbar-fullwidth" data-md-device-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-static" data-lg-device-layout="rd-navbar-static" data-sm-stick-up-offset="150px" data-lg-stick-up-offset="150px" class="rd-navbar">
+                <div class="rd-navbar-inner">
+                    <!-- RD Navbar Panel-->
+                    <div class="rd-navbar-wrapper">
+                        <div class="rd-navbar-panel">
+                            <!-- RD Navbar Toggle-->
+                            <button data-rd-navbar-toggle=".rd-navbar-nav-wrap" class="rd-navbar-toggle"><span></span></button>
+                            <!-- RD Navbar Brand-->
+                            <div class="rd-navbar-brand"><a href="hotelList?pageNum=1" class="brand-name">
+                                <div class="logo"><img src="/img/logo.png" alt=""></div></a></div>
+                        </div>
+                        <div class="rd-navbar-nav-wrap">
+                            <!-- RD Navbar Nav-->
+                            <ul class="rd-navbar-nav">
+                                <li class="active"><a href="Bmap_1"><span class="material-icons-room icon icon-white icon-lg"></span><span>地图</span><span class="triangle"></span></a></li>
+                                <li th:if="${user ne null}"><a th:href="'/MyInfo.htm?userId='+ ${user.userId}"><span class="material-icons-group icon icon-white icon-lg"></span><span>我的</span><span class="triangle"></span></a></li>
+                                <li th:if="${user eq null}"><a href="login"><span class="material-icons-group icon icon-white icon-lg"></span><span>我的</span><span class="triangle"></span></a></li>
+                                <li th:if="${user ne null}"><a href="logout"><span class="material-icons-email icon icon-white icon-lg"></span><span>注销</span><span class="triangle"></span></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <head>
+                    <title>酒店列表</title>
+                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+                    <!-- jquery -->
+                    <script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+                    <!-- bootstrap -->
+                    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap/css/bootstrap.min.css}" />
+                    <script type="text/javascript" th:src="@{/bootstrap/js/bootstrap.min.js}"></script>
+                    <!-- jquery-validator -->
+                    <script type="text/javascript" th:src="@{/jquery-validation/jquery.validate.min.js}"></script>
+                    <script type="text/javascript" th:src="@{/jquery-validation/localization/messages_zh.min.js}"></script>
+                    <!-- layer -->
+                    <script type="text/javascript" th:src="@{/layer/layer.js}"></script>
+                    <!-- md5.js -->
+                    <script type="text/javascript" th:src="@{/js/md5.min.js}"></script>
+                    <!-- common.js -->
+                    <script type="text/javascript" th:src="@{/js/common.js}"></script>
+
+                </head>
+                <body>
+                <!-- 用户信息列表 jqgrid start -->
+                <div class="row">
+
+    </header>
+    <main class="page-content">
+        <section class="section-sm-95 bg-image bg-image-2 text-center section-sm-bottom-100 section-60">
+            <div class="shell">
+                <h1 class="txt-white">酒店辅助订购系统</h1>
+                <div class="range">
+                    <div class="cell-lg-8 cell-lg-preffix-2">
+                        <!-- RD Mailform-->
+                        <form class="rd-mailform text-left form-search">
+                            <p class="small text-xs-right">查找您心仪的酒店</p>
+                            <div class="range offset-top-22">
+
+
+                                <div class="cell-xs-12">
+                                    <div class="form-group select2-custom">
+                                        <label for="hotelName" class="form-label">酒店名称</label>
+                                        <input id="hotelName" type="text" name="hotelName" data-constraints="@Required" placeholder="输入您要查找的酒店名称" class="form-control">
+                                    </div>
+                                </div>
+                                <br>
+                                <br>
+                                <div class="cell-xs-6 cell-md-4 offset-top-45">
+                                    <div class="form-group">
+                                        <!--Select 2-->
+                                        <label for="starRate" class="form-label">星级</label>
+                                        <select id="starRate" data-placeholder="-" data-minimum-results-for-search="Infinity" class="form-control select-filter">
+                                            <option></option>
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                            <option>5</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="cell-xs-6 cell-md-4 offset-top-45">
+                                    <div class="form-group">
+                                        <!--Select 2-->
+                                        <label for="address" class="form-label">地区</label>
+                                        <select id="address" data-placeholder="-" data-minimum-results-for-search="Infinity" class="form-control select-filter">
+                                            <option></option>
+                                            <option>青羊区</option>
+                                            <option>武侯区</option>
+                                            <option>双流区</option>
+                                            <option>郫都区</option>
+                                            <option>新都区</option>
+                                            <option>新津县</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="cell-xs-6 cell-md-4 offset-top-45">
+                                    <div class="form-group">
+                                        <!--Select 2-->
+                                        <label for="sight" class="form-label">地标景点</label>
+                                        <select id="sight" data-placeholder="-" data-minimum-results-for-search="Infinity" class="form-control select-filter">
+                                            <option></option>
+                                            <option>太古里</option>
+                                            <option>春熙路</option>
+                                            <option>熊猫景区</option>
+                                            <option>武侯祠</option>
+                                            <option>杜甫草堂</option>
+                                            <option>成都南站</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+
+                                <div class="cell-xs-12 offset-top-37">
+                                    <button type="submit" data-text="搜   索" class="btn btn-orange btn-fullwidth btn-winona btn-sm" onclick="getSearchList()"><span>搜   索</span></button>
+                                </div>
+
+
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    <section class="section-bottom-80 section-top-80">
+        <div class="shell">
+            <div class="range" >
+
+
+                <div class="cell-sm-6 cell-md-4" th:each="hotel,hotelStat : ${pageInfo.list}">
+                    <div class="thumbnail-custom thumbnail-custom-variant-3">
+                        <img th:src="@{${hotel.imgUrl}}" width="370" height="370" />
+                        <div class="caption">
+                            <div th:switch="${hotel.starRate}">
+                                <div th:case="'1'"><span class="material-icons-star icon icon-xs icon-white"></span></span></div>
+                                <div th:case="'2'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                                <div th:case="'3'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                                <div th:case="'4'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                                <div th:case="'5'"><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span><span class="material-icons-star icon icon-xs icon-white"></span></div>
+                            </div>
+
+                            <h4 id ="hotelName" th:text="${hotel.hotelName}"></h4>
+                            <!--                        <p id ="starRate" th:text="${hotel.starRate}"></p>-->
+                            <div id = "address" class="h4 address" style="color: #ff9a3c" th:text="${hotel.address}"></div>
+                            <p id="sight" th:text="${hotel.sight}"></p>
+                            <!--                        <p>Book by: Dec-10-2015</p>-->
+                            <a th:href="'/hotel_detail.htm?hotelId='+${hotel.hotelId}" data-text="详情" class="btn btn-winona btn-transparent btn-xs">详情</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+    <nav>
+        <ul class="pagination">
+            <li>
+                <a th:if="${not pageInfo.isIsFirstPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()-1})}" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+                <a th:if="${pageInfo.isIsFirstPage()}" href="javascript:void(0);" aria-label="Previous">
+                    <span aria-hidden="true">&laquo;</span>
+                </a>
+            </li>
+
+            <li th:each="pageNo : ${#numbers.sequence(1, pageInfo.getPages())}">
+                <a th:if="${pageInfo.getPageNum() eq pageNo}" href="javascript:void(0);">
+                    <span th:text="${pageNo}"></span>
+                </a>
+
+                <a th:if="${not (pageInfo.getPageNum() eq pageNo)}" th:href="@{${'hotelList'}(pageNum=${pageNo})}">
+                    <span th:text="${pageNo}"></span>
+                </a>
+            </li>
+
+            <li>
+                <a th:if="${not pageInfo.isIsLastPage()}" th:href="@{${'hotelList'}(pageNum=${pageInfo.getPageNum()+1})}" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+                <a th:if="${pageInfo.isIsLastPage()}" href="javascript:void(0);" aria-label="Next">
+                    <span aria-hidden="true">&raquo;</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</div>
+</body>
+</html>
+<!-- Java script-->
+<script src="/js/core.min.js"></script>
+<script src="/js/script.js"></script>
+<script>
+    function getSearchList(){
+        var hotelName = document.getElementById("hotelName").value;
+        var starRate = document.getElementById('starRate').options[document.getElementById('starRate').selectedIndex].text;
+        var address = document.getElementById('address').options[document.getElementById('address').selectedIndex].text;
+        var sight = document.getElementById('sight').options[document.getElementById('sight').selectedIndex].text;
+        var redirectUrl = "searchHotelList?";
+        if (hotelName != null && hotelName != ''){
+            redirectUrl = redirectUrl + "hotelName="+hotelName
+        }
+        if (starRate != null && starRate != ''){
+            if (hotelName == null || hotelName == ''){
+                redirectUrl = redirectUrl + "starRate="+starRate
+            }
+            else redirectUrl = redirectUrl + "&starRate="+starRate
+        }
+        if (address != null && address != ''){
+            if ((hotelName == null || hotelName == '')&&(starRate == null || starRate == '')){
+                redirectUrl = redirectUrl + "address="+address
+            }
+            else redirectUrl = redirectUrl + "&address="+address
+        }
+        if (sight != null && sight != ''){
+            if ((hotelName == null || hotelName == '')&&(starRate == null || starRate == '')&&(address == null || address == '')){
+                redirectUrl = redirectUrl + "sight="+sight
+            }
+            else redirectUrl = redirectUrl + "&sight="+sight
+        }
+        var redirectUrl = redirectUrl + '&pageNum=1';
+        var searchHotelsListForm = $("#searchHotelListForm");
+        debugger;
+        window.location.href=redirectUrl;
+    }
+</script>
+
